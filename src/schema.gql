@@ -17,11 +17,17 @@ type User {
   """Id of the user"""
   id: Int!
 
+  """Email of the user"""
+  email: String!
+
   """First name of the user"""
   firstName: String!
 
   """Last name of the user"""
   lastName: String!
+
+  """Posts of the user"""
+  posts: [Post!]!
 }
 
 type Query {
@@ -68,6 +74,9 @@ input UpdatePostInput {
 }
 
 input CreateUserInput {
+  """Email of the user"""
+  email: String!
+
   """First name of the user"""
   firstName: String!
 
@@ -76,11 +85,14 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
+  """Email of the user"""
+  email: String
+
   """First name of the user"""
-  firstName: String!
+  firstName: String
 
   """Last name of the user"""
-  lastName: String!
+  lastName: String
 
   """Id of the user"""
   id: Int!
