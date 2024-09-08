@@ -14,8 +14,14 @@ type Post {
 }
 
 type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Id of the user"""
+  id: Int!
+
+  """First name of the user"""
+  firstName: String!
+
+  """Last name of the user"""
+  lastName: String!
 }
 
 type Query {
@@ -69,12 +75,20 @@ input UpdatePostInput {
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """First name of the user"""
+  firstName: String!
+
+  """Last name of the user"""
+  lastName: String!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """First name of the user"""
+  firstName: String!
+
+  """Last name of the user"""
+  lastName: String!
+
+  """Id of the user"""
   id: Int!
 }
