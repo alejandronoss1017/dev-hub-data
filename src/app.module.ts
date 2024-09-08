@@ -4,6 +4,8 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { TestmodModule } from './testmod/testmod.module'
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
+import { PostsModule } from './posts/posts.module'
+import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
@@ -13,7 +15,9 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()]
     }),
-    TestmodModule
+    TestmodModule,
+    PostsModule,
+    UsersModule
   ],
   controllers: [],
   providers: []
