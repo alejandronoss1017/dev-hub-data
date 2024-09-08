@@ -3,8 +3,14 @@
 # ------------------------------------------------------
 
 type Post {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Id of the post"""
+  id: Int!
+
+  """Title of the post"""
+  title: String!
+
+  """Content of the post"""
+  content: String!
 }
 
 type User {
@@ -19,15 +25,24 @@ type Query {
 
   """Get a random number from 0 to the specified number"""
   randomFromZeroTo(to: Int): Int!
+
+  """Get all posts"""
   posts: [Post!]!
+
+  """Get a post by id"""
   post(id: Int!): Post!
   users: [User!]!
   user(id: Int!): User!
 }
 
 type Mutation {
+  """Create a post"""
   createPost(createPostInput: CreatePostInput!): Post!
+
+  """Update a post by id"""
   updatePost(updatePostInput: UpdatePostInput!): Post!
+
+  """Remove a post by id"""
   removePost(id: Int!): Post!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
@@ -35,13 +50,21 @@ type Mutation {
 }
 
 input CreatePostInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Title of the post"""
+  title: String!
+
+  """Content of the post"""
+  content: String!
 }
 
 input UpdatePostInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """Title of the post"""
+  title: String!
+
+  """Content of the post"""
+  content: String!
+
+  """Id of the post"""
   id: Int!
 }
 
