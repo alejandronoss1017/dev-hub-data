@@ -2,10 +2,10 @@ import { join } from 'path'
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
-import { TestmodModule } from './testmod/testmod.module'
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
 import { PostsModule } from './posts/posts.module'
 import { UsersModule } from './users/users.module'
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -15,9 +15,9 @@ import { UsersModule } from './users/users.module'
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()]
     }),
-    TestmodModule,
     PostsModule,
-    UsersModule
+    UsersModule,
+    DatabaseModule
   ],
   controllers: [],
   providers: []

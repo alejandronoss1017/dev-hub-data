@@ -25,13 +25,6 @@ type User {
 }
 
 type Query {
-  """Hola mundo"""
-  helloworld: String!
-  randomNumber: Float!
-
-  """Get a random number from 0 to the specified number"""
-  randomFromZeroTo(to: Int): Int!
-
   """Get all posts"""
   posts: [Post!]!
 
