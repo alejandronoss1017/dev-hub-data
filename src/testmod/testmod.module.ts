@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { TestmodResolver } from './testmod.resolver';
+import { Module } from '@nestjs/common'
+import { TestmodResolver } from './testmod.resolver'
 
 @Module({
   providers: [TestmodResolver]
