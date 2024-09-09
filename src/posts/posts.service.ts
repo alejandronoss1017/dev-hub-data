@@ -1,62 +1,61 @@
 import { Injectable } from '@nestjs/common'
 import { CreatePostInput } from './dto/create-post.input'
 import { UpdatePostInput } from './dto/update-post.input'
-
-// This is a simple in-memory store. It is not recommended for production
-// This is only for demo purposes
-// You should use a real database like Postgres, MySQL, MongoDB, etc
-const posts = [
-  {
-    id: 1,
-    title: 'Post 1',
-    content: 'Content 1'
-  },
-  {
-    id: 2,
-    title: 'Post 2',
-    content: 'Content 2'
-  },
-  {
-    id: 3,
-    title: 'Post 3',
-    content: 'Content 3'
-  }
-]
+import { DatabaseService } from 'src/database/database.service';
+import { Prisma, Post } from '@prisma/client';
 
 @Injectable()
 export class PostsService {
-  create(createPostInput: CreatePostInput) {
-    posts.push({
-      id: posts.length + 1,
-      title: createPostInput.title,
-      content: createPostInput.content
-    })
 
-    return posts[posts.length - 1]
+  constructor(private prisma: DatabaseService) {}
+
+  async create(createPostInput: CreatePostInput): Promise<Post> {
+    const { title, content, authorId } = createPostInput;
+
+    // Use Prisma's create method to add a new post
+    return this.prisma.post.create({
+      data: {
+        title,
+        content,
+        author: {
+          connect: { id: authorId }, // Connect the post with an existing user (author)
+        },
+      },
+    });
   }
 
-  findAll() {
-    return posts
+  async findAll(): Promise<Post[]> {
+    // Find all posts with their author details
+    return this.prisma.post.findMany({
+      include: { author: true }, // Includes author info in the response
+    });
   }
 
-  findOne(id: number) {
-    return posts.find((post) => post.id === id)
+  async findOne(id: number): Promise<Post | null> {
+    // Find a post by ID
+    return this.prisma.post.findUnique({
+      where: { id },
+      include: { author: true }, // Includes author info in the response
+    });
   }
 
-  update(id: number, updatePostInput: UpdatePostInput) {
-    posts.map((post) => {
-      if (post.id === id) {
-        post.title = updatePostInput.title
-        post.content = updatePostInput.content
-      }
-    })
+  async update(id: number, updatePostInput: UpdatePostInput): Promise<Post> {
+    const { title, content } = updatePostInput;
 
-    return posts.find((post) => post.id === id)
+    // Update the post data using Prisma's update method
+    return this.prisma.post.update({
+      where: { id },
+      data: {
+        title,
+        content,
+      },
+    });
   }
 
-  remove(id: number) {
-    const deletedPost = posts.find((post) => post.id === id)
-    posts.splice(posts.indexOf(deletedPost), 1)
-    return deletedPost
+  async remove(id: number): Promise<Post> {
+    // Delete the post by ID
+    return this.prisma.post.delete({
+      where: { id },
+    });
   }
 }

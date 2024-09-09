@@ -11,4 +11,8 @@ export class Post {
   
   @Field(() => String, { description: 'Content of the post' })
   content: string
+  
+  // Author id of the post
+  @Field(() => Int, { description: 'Author id of the post' })
+  authorId: number
 }

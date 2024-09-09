@@ -11,6 +11,9 @@ type Post {
 
   """Content of the post"""
   content: String!
+
+  """Author id of the post"""
+  authorId: Int!
 }
 
 type User {
@@ -60,14 +63,20 @@ input CreatePostInput {
 
   """Content of the post"""
   content: String!
+
+  """Author id of the post"""
+  authorId: Int!
 }
 
 input UpdatePostInput {
   """Title of the post"""
-  title: String!
+  title: String
 
   """Content of the post"""
-  content: String!
+  content: String
+
+  """Author id of the post"""
+  authorId: Int
 
   """Id of the post"""
   id: Int!

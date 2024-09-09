@@ -4,36 +4,8 @@ import { UpdateUserInput } from './dto/update-user.input'
 import { DatabaseService } from 'src/database/database.service'
 import { Prisma, User } from '@prisma/client';
 
-/*
-const users = [
-  {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Doe'
-  },
-  {
-    id: 2,
-    firstName: 'Jane',
-    lastName: 'Doe'
-  },
-  {
-    id: 3,
-    firstName: 'Alice',
-    lastName: 'Smith'
-  }
-]
-*/
-
 @Injectable()
 export class UsersService {
-  // async user(
-  //   userWhereUniqueInput: Prisma.UserWhereUniqueInput,
-  // ): Promise<User | null> {
-  //   return this.database.user.findUnique({
-  //     where: userWhereUniqueInput,
-  //   });
-  // }
-
   constructor(private prisma: DatabaseService) {}
 
   async create(createUserInput: CreateUserInput): Promise<User> {
@@ -52,7 +24,7 @@ export class UsersService {
    async findAll(): Promise<User[]> {
     // Find all users
     return this.prisma.user.findMany({
-      include: { posts: true },  // Includes posts in the response
+      include: { posts: true }, 
     });
   }
 
@@ -60,7 +32,7 @@ export class UsersService {
     // Find a single user by ID
     return this.prisma.user.findUnique({
       where: { id },
-      include: { posts: true },  // Includes posts in the response
+      include: { posts: true }, 
     });
   }
 
@@ -84,29 +56,4 @@ export class UsersService {
       where: { id },
     });
   }
-
-  // findAll() {
-  //   return users
-  // }
-
-  // findOne(id: number) {
-  //   return users.find((user) => user.id === id)
-  // }
-
-  // update(id: number, updateUserInput: UpdateUserInput) {
-  //   users.map((user) => {
-  //     if (user.id === id) {
-  //       user.firstName = updateUserInput.firstName
-  //       user.lastName = updateUserInput.lastName
-  //     }
-  //   })
-
-  //   return users.find((user) => user.id === id)
-  // }
-
-  // remove(id: number) {
-  //   const deletedUser = users.find((user) => user.id === id)
-  //   users.splice(users.indexOf(deletedUser), 1)
-  //   return deletedUser
-  // }
 }

@@ -7,9 +7,9 @@ export class UpdatePostInput extends PartialType(CreatePostInput) {
   @Field(() => Int, { description: 'Id of the post' })
   id: number
   
-  @Field(() => String, { description: 'Title of the post' })
+  @Field(() => String, { description: 'Title of the post', nullable: true })
   title: string
   
-  @Field(() => String, { description: 'Content of the post' })
+  @Field(() => String, { description: 'Content of the post', nullable: true })
   content: string
 }
