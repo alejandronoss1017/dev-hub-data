@@ -11,10 +11,13 @@ RUN npm install
 # Copy the source files to the container
 COPY . .
 
-# Copy the .env file to the container
-COPY .env .env
+# Define build argument for DATABASE_URL
+ARG DATABASE_URL
 
-# Generate Prisma client as root
+# Set environment variable
+ENV DATABASE_URL=$DATABASE_URL
+
+# Generate Prisma client
 RUN npx prisma generate
 
 # Creates a "dist" folder with the production build
