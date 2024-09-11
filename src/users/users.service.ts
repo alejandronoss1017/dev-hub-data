@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { CreateUserInput } from './dto/create-user.input'
 import { UpdateUserInput } from './dto/update-user.input'
 import { DatabaseService } from 'src/database/database.service'
@@ -21,11 +21,20 @@ export class UsersService {
     });
   }
 
+  // add logger
    async findAll(): Promise<User[]> {
-    // Find all users
-    return this.prisma.user.findMany({
-      include: { posts: true }, 
-    });
+    Logger.log('Fetching all users', 'UsersService');
+
+    // try cath
+    try {
+      // Find all users
+      return this.prisma.user.findMany({
+        include: { posts: true }, 
+      });
+    } catch (error) {
+      Logger.error(error.message, error.stack, 'UsersService');
+      throw error;
+    }
   }
 
   async findOne(id: number): Promise<User | null> {

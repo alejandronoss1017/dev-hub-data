@@ -1,11 +1,12 @@
 import { join } from 'path'
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
 import { PostsModule } from './posts/posts.module'
 import { UsersModule } from './users/users.module'
 import { DatabaseModule } from './database/database.module';
+import { LoggerMiddleware } from './middelware'
 
 @Module({
   imports: [
@@ -22,4 +23,10 @@ import { DatabaseModule } from './database/database.module';
   controllers: [],
   providers: []
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
