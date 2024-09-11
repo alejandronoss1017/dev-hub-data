@@ -7,6 +7,9 @@ import { PostsModule } from './posts/posts.module'
 import { UsersModule } from './users/users.module'
 import { DatabaseModule } from './database/database.module';
 import { LoggerMiddleware } from './middelware'
+import { AppController } from './app.controller'
+import { HealthController } from './heatlh.controller'
+import { AppService } from './app.service'
 
 @Module({
   imports: [
@@ -20,8 +23,8 @@ import { LoggerMiddleware } from './middelware'
     UsersModule,
     DatabaseModule
   ],
-  controllers: [],
-  providers: []
+  controllers: [AppController, HealthController],
+  providers: [AppService]
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
