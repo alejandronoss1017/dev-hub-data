@@ -5,6 +5,7 @@ WORKDIR /app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
 
+# Set the DATABASE_URL environment variable
 ARG DATABASE_URL
 
 ENV DATABASE_URL=$DATABASE_URL
@@ -18,16 +19,10 @@ COPY . .
 # Generate Prisma client
 RUN npx prisma generate
 
-# Apply migrations to create tables
-RUN npx prisma migrate dev --name init
-
-# Seed the database
-RUN npx prisma db seed
-
 # Creates the build of the app
 RUN npm run build
 
 EXPOSE 3000
 
-# Start the server using the production build
-CMD ["npm", "run", "start"]
+# Start the app, apply migrations, and seed the database
+CMD ["sh", "-c", "npx prisma migrate dev --name init && npx prisma db seed && npm run start"]
