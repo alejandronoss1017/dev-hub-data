@@ -2,11 +2,107 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Query {
-  """Hola mundo"""
-  helloworld: String!
-  randomNumber: Float!
+type Post {
+  """Id of the post"""
+  id: Int!
 
-  """Get a random number from 0 to the specified number"""
-  randomFromZeroTo(to: Int): Int!
+  """Title of the post"""
+  title: String!
+
+  """Content of the post"""
+  content: String!
+
+  """Author id of the post"""
+  authorId: Int!
+}
+
+type User {
+  """Id of the user"""
+  id: Int!
+
+  """Email of the user"""
+  email: String!
+
+  """First name of the user"""
+  firstName: String!
+
+  """Last name of the user"""
+  lastName: String!
+
+  """Posts of the user"""
+  posts: [Post!]!
+}
+
+type Query {
+  """Get all posts"""
+  posts: [Post!]!
+
+  """Get a post by id"""
+  post(id: Int!): Post!
+  users: [User!]!
+  user(id: Int!): User!
+}
+
+type Mutation {
+  """Create a post"""
+  createPost(createPostInput: CreatePostInput!): Post!
+
+  """Update a post by id"""
+  updatePost(updatePostInput: UpdatePostInput!): Post!
+
+  """Remove a post by id"""
+  removePost(id: Int!): Post!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+}
+
+input CreatePostInput {
+  """Title of the post"""
+  title: String!
+
+  """Content of the post"""
+  content: String!
+
+  """Author id of the post"""
+  authorId: Int!
+}
+
+input UpdatePostInput {
+  """Title of the post"""
+  title: String
+
+  """Content of the post"""
+  content: String
+
+  """Author id of the post"""
+  authorId: Int
+
+  """Id of the post"""
+  id: Int!
+}
+
+input CreateUserInput {
+  """Email of the user"""
+  email: String!
+
+  """First name of the user"""
+  firstName: String!
+
+  """Last name of the user"""
+  lastName: String!
+}
+
+input UpdateUserInput {
+  """Email of the user"""
+  email: String
+
+  """First name of the user"""
+  firstName: String
+
+  """Last name of the user"""
+  lastName: String
+
+  """Id of the user"""
+  id: Int!
 }

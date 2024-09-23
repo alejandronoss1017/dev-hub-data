@@ -1,21 +1,36 @@
 import { join } from 'path'
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
-import { TestmodModule } from './testmod/testmod.module';
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
+import { PostsModule } from './posts/posts.module'
+import { UsersModule } from './users/users.module'
+import { DatabaseModule } from './database/database.module';
+import { LoggerMiddleware } from './middelware'
+import { AppController } from './app.controller'
+import { HealthController } from './heatlh.controller'
+import { AppService } from './app.service'
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      csrfPrevention: false,
       playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      plugins: [ApolloServerPluginLandingPageLocalDefault()]
     }),
-    TestmodModule,
+    PostsModule,
+    UsersModule,
+    DatabaseModule
   ],
-  controllers: [],
-  providers: []
+  controllers: [AppController, HealthController],
+  providers: [AppService]
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
